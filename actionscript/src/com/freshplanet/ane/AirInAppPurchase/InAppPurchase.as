@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////////////////////////////////
 //
-//  Copyright 2012 Freshplanet (http://freshplanet.com | opensource@freshplanet.com)
+//  Copyright 2014 Fovea.cc (http://fovea.cc | hoelt@fovea.cc)
 //  
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -16,32 +16,32 @@
 //  
 //////////////////////////////////////////////////////////////////////////////////////
 
-package com.freshplanet.ane.AirInAppPurchase
+package cc.fovea.ane.AirMicrophone
 {
 	import flash.events.EventDispatcher;
 	import flash.events.StatusEvent;
 	import flash.external.ExtensionContext;
 	import flash.system.Capabilities;
 
-	public class InAppPurchase extends EventDispatcher
+	public class Microphone extends EventDispatcher
 	{
-		private static var _instance:InAppPurchase;
+		private static var _instance:Microphone;
 		
 		private var extCtx:*;
 		
-		public function InAppPurchase()
+		public function Microphone()
 		{
 			if (!_instance)
 			{
-				if (this.isInAppPurchaseSupported)
+				if (this.isMicrophoneSupported)
 				{
-					extCtx = ExtensionContext.createExtensionContext("com.freshplanet.AirInAppPurchase", null);
+					extCtx = ExtensionContext.createExtensionContext("cc.fovea.AirMicrophone", null);
 					if (extCtx != null)
 					{
 						extCtx.addEventListener(StatusEvent.STATUS, onStatus);
 					} else
 					{
-						trace('[InAppPurchase] extCtx is null.');
+						trace('[Microphone] extCtx is null.');
 					}
 				}
 			_instance = this;
@@ -53,39 +53,39 @@ package com.freshplanet.ane.AirInAppPurchase
 		}
 		
 		
-		public static function getInstance():InAppPurchase
+		public static function getInstance():Microphone
 		{
-			return _instance != null ? _instance : new InAppPurchase();
+			return _instance != null ? _instance : new Microphone();
 		}
 		
 		
 		public function init(googlePlayKey:String, debug:Boolean = false):void
 		{
-			if (this.isInAppPurchaseSupported)
+			if (this.isMicrophoneSupported)
 			{
-				trace("[InAppPurchase] init library");
+				trace("[Microphone] init library");
 				extCtx.call("initLib", googlePlayKey, debug);
 			}
 		}
 		
 		public function makePurchase(productId:String ):void
 		{
-			if (this.isInAppPurchaseSupported)
+			if (this.isMicrophoneSupported)
 			{
-				trace("[InAppPurchase] purchasing", productId);
+				trace("[Microphone] purchasing", productId);
 				extCtx.call("makePurchase", productId);
 			} else
 			{
-				this.dispatchEvent(new InAppPurchaseEvent(InAppPurchaseEvent.PURCHASE_ERROR, "InAppPurchase not supported"));
+				this.dispatchEvent(new MicrophoneEvent(MicrophoneEvent.PURCHASE_ERROR, "Microphone not supported"));
 			}
 		}
 		
 		// receipt is for android device.
 		public function removePurchaseFromQueue(productId:String, receipt:String):void
 		{
-			if (this.isInAppPurchaseSupported)
+			if (this.isMicrophoneSupported)
 			{
-				trace("[InAppPurchase] removing product from queue", productId, receipt);
+				trace("[Microphone] removing product from queue", productId, receipt);
 				extCtx.call("removePurchaseFromQueue", productId, receipt);
 				
 				if (Capabilities.manufacturer.indexOf("iOS") > -1)
@@ -98,7 +98,7 @@ package com.freshplanet.ane.AirInAppPurchase
 						} 
 						catch(error:Error)
 						{
-							trace("[InAppPurchase] Couldn't parse purchase: " + jsonPurchase);
+							trace("[Microphone] Couldn't parse purchase: " + jsonPurchase);
 						}
 						return false;
 					});
@@ -110,13 +110,13 @@ package com.freshplanet.ane.AirInAppPurchase
 		
 		public function getProductsInfo(productsId:Array, subscriptionIds:Array):void
 		{
-			if (this.isInAppPurchaseSupported)
+			if (this.isMicrophoneSupported)
 			{
-				trace("[InAppPurchase] get Products Info");
+				trace("[Microphone] get Products Info");
 				extCtx.call("getProductsInfo", productsId, subscriptionIds);
 			} else
 			{
-				this.dispatchEvent( new InAppPurchaseEvent(InAppPurchaseEvent.PRODUCT_INFO_ERROR) );
+				this.dispatchEvent( new MicrophoneEvent(MicrophoneEvent.PRODUCT_INFO_ERROR) );
 			}
 
 		}
@@ -124,13 +124,13 @@ package com.freshplanet.ane.AirInAppPurchase
 		
 		public function userCanMakeAPurchase():void 
 		{
-			if (this.isInAppPurchaseSupported)
+			if (this.isMicrophoneSupported)
 			{
-				trace("[InAppPurchase] check user can make a purchase");
+				trace("[Microphone] check user can make a purchase");
 				extCtx.call("userCanMakeAPurchase");
 			} else
 			{
-				this.dispatchEvent(new InAppPurchaseEvent(InAppPurchaseEvent.PURCHASE_DISABLED));
+				this.dispatchEvent(new MicrophoneEvent(MicrophoneEvent.PURCHASE_DISABLED));
 			}
 		}
 			
@@ -138,11 +138,11 @@ package com.freshplanet.ane.AirInAppPurchase
 		{
 			if (Capabilities.manufacturer.indexOf('Android') > -1)
 			{
-				trace("[InAppPurchase] check user can make a purchase");
+				trace("[Microphone] check user can make a purchase");
 				extCtx.call("userCanMakeASubscription");
 			} else
 			{
-				this.dispatchEvent(new InAppPurchaseEvent(InAppPurchaseEvent.PURCHASE_DISABLED));
+				this.dispatchEvent(new MicrophoneEvent(MicrophoneEvent.PURCHASE_DISABLED));
 			}
 		}
 		
@@ -150,11 +150,11 @@ package com.freshplanet.ane.AirInAppPurchase
 		{
 			if (Capabilities.manufacturer.indexOf('Android') > -1)
 			{
-				trace("[InAppPurchase] check user can make a subscription");
+				trace("[Microphone] check user can make a subscription");
 				extCtx.call("makeSubscription", productId);
 			} else
 			{
-				this.dispatchEvent(new InAppPurchaseEvent(InAppPurchaseEvent.PURCHASE_ERROR, "InAppPurchase not supported"));
+				this.dispatchEvent(new MicrophoneEvent(MicrophoneEvent.PURCHASE_ERROR, "Microphone not supported"));
 			}
 		}
 		
@@ -169,7 +169,7 @@ package com.freshplanet.ane.AirInAppPurchase
 			{
 				var jsonPurchases:String = "[" + _iosPendingPurchases.join(",") + "]";
 				var jsonData:String = "{ \"purchases\": " + jsonPurchases + "}";
-				dispatchEvent(new InAppPurchaseEvent(InAppPurchaseEvent.RESTORE_INFO_RECEIVED, jsonData));
+				dispatchEvent(new MicrophoneEvent(MicrophoneEvent.RESTORE_INFO_RECEIVED, jsonData));
 			}
 		}
 
@@ -178,16 +178,16 @@ package com.freshplanet.ane.AirInAppPurchase
 		{
 			if (Capabilities.manufacturer.indexOf('Android') > -1)
 			{
-				trace("[InAppPurchase] stop library");
+				trace("[Microphone] stop library");
 				extCtx.call("stopLib");
 			}
 		}
 
 		
-		public function get isInAppPurchaseSupported():Boolean
+		public function get isMicrophoneSupported():Boolean
 		{
 			var value:Boolean = Capabilities.manufacturer.indexOf('iOS') > -1 || Capabilities.manufacturer.indexOf('Android') > -1;
-			trace(value ? '[InAppPurchase]  in app purchase is supported ' : '[InAppPurchase]  in app purchase is not supported ');
+			trace(value ? '[Microphone]  in app purchase is supported ' : '[Microphone]  in app purchase is not supported ');
 			return value;
 		}
 		
@@ -196,39 +196,39 @@ package com.freshplanet.ane.AirInAppPurchase
 		private function onStatus(event:StatusEvent):void
 		{
 			trace(event);
-			var e:InAppPurchaseEvent;
+			var e:MicrophoneEvent;
 			switch(event.code)
 			{
 				case "PRODUCT_INFO_RECEIVED":
-					e = new InAppPurchaseEvent(InAppPurchaseEvent.PRODUCT_INFO_RECEIVED, event.level);
+					e = new MicrophoneEvent(MicrophoneEvent.PRODUCT_INFO_RECEIVED, event.level);
 					break;
 				case "PURCHASE_SUCCESSFUL":
 					if (Capabilities.manufacturer.indexOf("iOS") > -1)
 					{
 						_iosPendingPurchases.push(event.level);
 					}
-					e = new InAppPurchaseEvent(InAppPurchaseEvent.PURCHASE_SUCCESSFULL, event.level);
+					e = new MicrophoneEvent(MicrophoneEvent.PURCHASE_SUCCESSFULL, event.level);
 					break;
 				case "PURCHASE_ERROR":
-					e = new InAppPurchaseEvent(InAppPurchaseEvent.PURCHASE_ERROR, event.level);
+					e = new MicrophoneEvent(MicrophoneEvent.PURCHASE_ERROR, event.level);
 					break;
 				case "PURCHASE_ENABLED":
-					e = new InAppPurchaseEvent(InAppPurchaseEvent.PURCHASE_ENABLED, event.level);
+					e = new MicrophoneEvent(MicrophoneEvent.PURCHASE_ENABLED, event.level);
 					break;
 				case "PURCHASE_DISABLED":
-					e = new InAppPurchaseEvent(InAppPurchaseEvent.PURCHASE_DISABLED, event.level);
+					e = new MicrophoneEvent(MicrophoneEvent.PURCHASE_DISABLED, event.level);
 					break;
 				case "PRODUCT_INFO_ERROR":
-					e = new InAppPurchaseEvent(InAppPurchaseEvent.PRODUCT_INFO_ERROR);
+					e = new MicrophoneEvent(MicrophoneEvent.PRODUCT_INFO_ERROR);
 					break;
 				case "SUBSCRIPTION_ENABLED":
-					e = new InAppPurchaseEvent(InAppPurchaseEvent.SUBSCRIPTION_ENABLED);
+					e = new MicrophoneEvent(MicrophoneEvent.SUBSCRIPTION_ENABLED);
 					break;
 				case "SUBSCRIPTION_DISABLED":
-					e = new InAppPurchaseEvent(InAppPurchaseEvent.SUBSCRIPTION_DISABLED);
+					e = new MicrophoneEvent(MicrophoneEvent.SUBSCRIPTION_DISABLED);
 					break;
 				case "RESTORE_INFO_RECEIVED":
-					e = new InAppPurchaseEvent(InAppPurchaseEvent.RESTORE_INFO_RECEIVED, event.level);
+					e = new MicrophoneEvent(MicrophoneEvent.RESTORE_INFO_RECEIVED, event.level);
 					break;
 				default:
 				

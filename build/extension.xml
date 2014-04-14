@@ -1,6 +1,6 @@
 <!--//////////////////////////////////////////////////////////////////////////////////////
 //
-//  Copyright 2012 Freshplanet (http://freshplanet.com | opensource@freshplanet.com)
+//  Copyright 2014 Fovea.cc (http://fovea.cc | hoelt@fovea.cc)
 //  
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -18,7 +18,7 @@
 
 <extension xmlns="http://ns.adobe.com/air/extension/3.9">
 
-    <id>com.freshplanet.AirInAppPurchase</id>
+    <id>cc.fovea.AirMicrophone</id>
 
     <versionNumber>2.0.0</versionNumber>
 
@@ -26,18 +26,18 @@
 
         <platform name="iPhone-ARM">
                 <applicationDeployment>
-                    <nativeLibrary>libAirInAppPurchase.a</nativeLibrary>
-                    <initializer>AirInAppInitializer</initializer> 
+                    <nativeLibrary>libAirMicrophone.a</nativeLibrary>
+                    <initializer>AirMicInitializer</initializer> 
                 </applicationDeployment>
         </platform>
 
-        <platform name="Android-ARM"> 
+        <!-- platform name="Android-ARM"> 
             <applicationDeployment> 
-                <nativeLibrary>libAirInAppPurchase.jar</nativeLibrary> 
+                <nativeLibrary>libAirMicrophone.jar</nativeLibrary> 
                 <initializer>com.freshplanet.inapppurchase.Extension</initializer> 
                 <finalizer>com.freshplanet.inapppurchase.Extension</finalizer> 
             </applicationDeployment> 
-        </platform> 
+        </platform -->
 
         <platform name="default"> 
             <applicationDeployment/> 

@@ -1,7 +1,7 @@
 Air Native Extension for In App Purchases (iOS + Android)
 ======================================
 
-This is an [Air native extension](http://www.adobe.com/devnet/air/native-extensions-for-air.html) for In-App Purchases on iOS and Android. It has been developed by [FreshPlanet](http://freshplanet.com) and is used in the game [SongPop](http://songpop.fm).
+This is an [Air native extension](http://www.adobe.com/devnet/air/native-extensions-for-air.html) for In-App Purchases on iOS and Android. It has been developed by [Fovea](http://fovea.cc).
 
 
 Notes
@@ -60,4 +60,4 @@ ant
 Authors
 ------
 
-This ANE has been written by [Thibaut Crenn](https://github.com/titi-us). It belongs to [FreshPlanet Inc.](http://freshplanet.com) and is distributed under the [Apache Licence, version 2.0](http://www.apache.org/licenses/LICENSE-2.0).
+This ANE has been written by [Jean-Christophe Hoelt](https://github.com/j3k0). It belongs to [Fovea](http://fovea.cc) and is distributed under the [Apache Licence, version 2.0](http://www.apache.org/licenses/LICENSE-2.0).
