@@ -16,11 +16,11 @@
 //  
 //////////////////////////////////////////////////////////////////////////////////////
 
-package com.freshplanet.ane.AirInAppPurchase
+package cc.fovea.ane.AirMicrophone
 {
 	import flash.events.Event;
 	
-	public class InAppPurchaseEvent extends Event
+	public class MicrophoneEvent extends Event
 	{
 		
 		// init -> check if previously purchases not being processed by the app
@@ -47,7 +47,7 @@ package com.freshplanet.ane.AirInAppPurchase
 		// json encoded string (if any)
 		public var data:String;
 		
-		public function InAppPurchaseEvent(type:String, data:String = null, bubbles:Boolean=false, cancelable:Boolean=false)
+		public function MicrophoneEvent(type:String, data:String = null, bubbles:Boolean=false, cancelable:Boolean=false)
 		{
 			this.data = data;
 			super(type, bubbles, cancelable);
