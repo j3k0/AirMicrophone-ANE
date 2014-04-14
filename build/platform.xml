@@ -1,0 +1,6 @@
+<platform xmlns="http://ns.adobe.com/air/extension/3.9">
+    <sdkVersion>7.0</sdkVersion>
+    <linkerOptions> 
+        <option>-framework StoreKit</option> 
+    </linkerOptions> 
+</platform>
