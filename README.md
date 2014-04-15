@@ -1,42 +1,18 @@
-Air Native Extension for In App Purchases (iOS + Android)
-======================================
+Air Native Extension for Microphone (iOS)
+===========================
 
-This is an [Air native extension](http://www.adobe.com/devnet/air/native-extensions-for-air.html) for In-App Purchases on iOS and Android. It has been developed by [Fovea](http://fovea.cc).
-
+This is an [Air native extension](http://www.adobe.com/devnet/air/native-extensions-for-air.html) aiming to replace the Microphone class on iOS. It has been developed by [Fovea](http://fovea.cc).
 
 Notes
 ---------
 
-* iOS implementation does NOT contain on-device receipt validation.
-* Android implementation uses [In-app Billing Version 3](http://developer.android.com/google/play/billing/api.html).
-
+* only support activity level monitoring for now.
+* this is WORK IN PROGRESS.
 
 Installation
 ---------
 
-The ANE binary (Microphone.ane) is located in the *bin* folder. You should add it to your application project's Build Path and make sure to package it with your app (more information [here](http://help.adobe.com/en_US/air/build/WS597e5dadb9cc1e0253f7d2fc1311b491071-8000.html)).
-
-On Android:
-
- * you will need to add the following in your application descriptor:
-
-```xml
-
-<android>
-    <manifestAdditions><![CDATA[
-        <manifest android:installLocation="auto">
-            
-            <uses-permission android:name="com.android.vending.BILLING" />
-            
-            <application>
-                <service android:name="com.freshplanet.inapppurchase.BillingService" />
-            </application>
-
-        </manifest>
-    ]]></manifestAdditions>
-</android>
-```
-
+The ANE binary (AirMicrophone.ane) is located in the *bin* folder. You should add it to your application project's Build Path and make sure to package it with your app (more information [here](http://help.adobe.com/en_US/air/build/WS597e5dadb9cc1e0253f7d2fc1311b491071-8000.html)).
 
 
 Build script
