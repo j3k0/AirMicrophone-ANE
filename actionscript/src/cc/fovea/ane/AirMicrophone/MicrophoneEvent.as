@@ -18,39 +18,19 @@
 
 package cc.fovea.ane.AirMicrophone
 {
-	import flash.events.Event;
-	
-	public class MicrophoneEvent extends Event
-	{
-		
-		// init -> check if previously purchases not being processed by the app
-		public static const PURCHASE_SUCCESSFULL:String = "purchaseSuccesfull";
-		public static const PURCHASE_ERROR:String   	= "purchaseError";
-		
-		// user can make a purchase
-		public static const PURCHASE_ENABLED:String = "purchaseEnabled";
-		// user cannot make a purchase
-		public static const PURCHASE_DISABLED:String = "purchaseDisabled";
-		
-		// user can make a subscription
-		public static const SUBSCRIPTION_ENABLED:String = "subsEnabled";
-		// user cannot make a subscription
-		public static const SUBSCRIPTION_DISABLED:String = "subsDisabled";
+    import flash.events.Event;
 
-		
-		
-		public static const PRODUCT_INFO_RECEIVED:String = "productInfoReceived";
-		public static const PRODUCT_INFO_ERROR:String = "productInfoError";
+    public class MicrophoneEvent extends Event
+    {
+        public static const ACTIVITY_LEVEL:String = "activityLevel";
 
-		public static const RESTORE_INFO_RECEIVED:String = "restoreInfoReceived";
-		
-		// json encoded string (if any)
-		public var data:String;
-		
-		public function MicrophoneEvent(type:String, data:String = null, bubbles:Boolean=false, cancelable:Boolean=false)
-		{
-			this.data = data;
-			super(type, bubbles, cancelable);
-		}
-	}
+        // json encoded string (if any)
+        public var data:String;
+
+        public function MicrophoneEvent(type:String, data:String = null, bubbles:Boolean=false, cancelable:Boolean=false)
+        {
+            this.data = data;
+            super(type, bubbles, cancelable);
+        }
+    }
 }

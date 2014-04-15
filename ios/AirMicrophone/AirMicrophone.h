@@ -17,20 +17,16 @@
 //////////////////////////////////////////////////////////////////////////////////////
 
 #import <Foundation/Foundation.h>
-#import <StoreKit/StoreKit.h>
+#import <AVFoundation/AVFoundation.h>
+#import <CoreAudio/CoreAudioTypes.h>
 #import "FlashRuntimeExtensions.h"
 
-@interface AirMicrophone : NSObject <SKPaymentTransactionObserver, SKProductsRequestDelegate>
-
-- (void) sendRequest:(SKRequest*)request AndContext:(FREContext*)ctx;
-- (void) completeTransaction:(SKPaymentTransaction*)transaction;
-- (void) failedTransaction:(SKPaymentTransaction*)transaction;
-- (void) purchasingTransaction:(SKPaymentTransaction*)transaction;
-- (void) restoreTransaction:(SKPaymentTransaction*)transaction;
+@interface AirMicrophone : NSObject
+{
+    @public
+    AVAudioRecorder *recorder;
+}
 @end
 
 FREObject AirMicrophoneInit(FREContext context, void* functionData, uint32_t argc, FREObject argv[]);
-FREObject makePurchase(FREContext context, void* functionData, uint32_t argc, FREObject argv[]);
-FREObject userCanMakeAPurchase(FREContext context, void* functionData, uint32_t argc, FREObject argv[]);
-FREObject getProductsInfo(FREContext context, void* functionData, uint32_t argc, FREObject argv[]);
-FREObject removePurchaseFromQueue(FREContext context, void* functionData, uint32_t argc, FREObject argv[]);
+FREObject getActivityLevel(FREContext context, void* functionData, uint32_t argc, FREObject argv[]);

@@ -7,19 +7,19 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A6F22F2318FD634800DB299F /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A6F22F2218FD634800DB299F /* AVFoundation.framework */; };
 		BFA8AB071527AFB700845071 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFA8AB061527AFB700845071 /* Foundation.framework */; };
 		BFA8AB0D1527AFB700845071 /* AirMicrophone.m in Sources */ = {isa = PBXBuildFile; fileRef = BFA8AB0C1527AFB700845071 /* AirMicrophone.m */; };
-		BFA8AB141527B02300845071 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFA8AB131527B02300845071 /* StoreKit.framework */; };
 		FA82D92D17B00A3500792905 /* FlashRuntimeExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = FA82D92C17B00A3500792905 /* FlashRuntimeExtensions.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		A6F22F2218FD634800DB299F /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		BFA8AB031527AFB700845071 /* libAirMicrophone.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libAirMicrophone.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		BFA8AB061527AFB700845071 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		BFA8AB0A1527AFB700845071 /* AirMicrophone-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AirMicrophone-Prefix.pch"; sourceTree = "<group>"; };
 		BFA8AB0B1527AFB700845071 /* AirMicrophone.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AirMicrophone.h; sourceTree = "<group>"; };
 		BFA8AB0C1527AFB700845071 /* AirMicrophone.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AirMicrophone.m; sourceTree = "<group>"; };
-		BFA8AB131527B02300845071 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		FA82D92C17B00A3500792905 /* FlashRuntimeExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlashRuntimeExtensions.h; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
@@ -28,7 +28,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BFA8AB141527B02300845071 /* StoreKit.framework in Frameworks */,
+				A6F22F2318FD634800DB299F /* AVFoundation.framework in Frameworks */,
 				BFA8AB071527AFB700845071 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -56,7 +56,7 @@
 		BFA8AB051527AFB700845071 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				BFA8AB131527B02300845071 /* StoreKit.framework */,
+				A6F22F2218FD634800DB299F /* AVFoundation.framework */,
 				BFA8AB061527AFB700845071 /* Foundation.framework */,
 			);
 			name = Frameworks;
