@@ -121,7 +121,7 @@ DEFINE_ANE_FUNCTION(getActivityLevel)
     float peak = [mic->recorder peakPowerForChannel:0];
     static uint8_t sPeak[8];
     // sprintf(sPeak, "%2.2f", pow(10, peak / 20));
-    float value = pow(5.0, peak / 80.0);
+    float value = 2.0 * (pow(5.0, avg / 40.0) - 0.5); // Magic formula to make activity as near as android.
     if (value < 0.001f) value = 0.001f;
     sprintf(sPeak, "%2.2f", value);
     FREDispatchStatusEventAsync(context, (uint8_t*) "ACTIVITY_LEVEL", sPeak);

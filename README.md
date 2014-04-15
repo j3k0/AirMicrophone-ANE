@@ -1,5 +1,5 @@
-Air Native Extension for Microphone (iOS)
-===========================
+AirMicrophone-ANE
+=================
 
 This is an [Air native extension](http://www.adobe.com/devnet/air/native-extensions-for-air.html) aiming to replace the Microphone class on iOS. It has been developed by [Fovea](http://fovea.cc).
 
