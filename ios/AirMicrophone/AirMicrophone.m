@@ -57,7 +57,8 @@ void *AirMicRefToSelf;
 -(void)createRecorder
 {
     NSLog(@"Entering createRecorder");
-    [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayAndRecord error:nil];
+    // [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayAndRecord error:nil];
+    [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategorySoloAmbient error:nil];
     [[AVAudioSession sharedInstance] setActive:YES error:nil];
 
     NSURL *url = [NSURL fileURLWithPath:@"/dev/null"];
@@ -71,17 +72,36 @@ void *AirMicRefToSelf;
     NSError *error;
 
     recorder = [[AVAudioRecorder alloc] initWithURL:url settings:settings error:&error];
+    if (!recorder) {
+        NSLog(@"%@", [error description]);
+    }
+
+    NSLog(@"Exiting createRecorder");
+}
+
+-(void)stopMic
+{
+    [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategorySoloAmbient error:nil];
+
+    if (recorder) {
+        if (recorder.recording) {
+            [recorder stop];
+        }
+    }
+}
+
+-(void)startMic
+{
+    [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayAndRecord error:nil];
 
     if (recorder) {
         NSLog(@"record!");
-        [recorder prepareToRecord];
-        recorder.meteringEnabled = YES;
-        [recorder record];
+        if (!recorder.recording) {
+            [recorder prepareToRecord];
+            recorder.meteringEnabled = YES;
+            [recorder record];
+        }
     }
-    else {
-        NSLog(@"%@", [error description]);
-    }
-    NSLog(@"Exiting createRecorder");
 }
 
 -(void)dealloc
@@ -116,15 +136,31 @@ DEFINE_ANE_FUNCTION(AirMicrophoneInit)
 DEFINE_ANE_FUNCTION(getActivityLevel)
 {
     AirMicrophone *mic = (AirMicrophone*)AirMicRefToSelf;
-    [mic->recorder updateMeters];
-    float avg  = [mic->recorder averagePowerForChannel:0];
-    float peak = [mic->recorder peakPowerForChannel:0];
-    static uint8_t sPeak[8];
-    // sprintf(sPeak, "%2.2f", pow(10, peak / 20));
-    float value = 2.0 * (pow(5.0, avg / 40.0) - 0.5); // Magic formula to make activity as near as android.
-    if (value < 0.001f) value = 0.001f;
-    sprintf(sPeak, "%2.2f", value);
-    FREDispatchStatusEventAsync(context, (uint8_t*) "ACTIVITY_LEVEL", sPeak);
+    if (mic->recorder.recording) {
+        [mic->recorder updateMeters];
+        float avg  = [mic->recorder averagePowerForChannel:0];
+        float peak = [mic->recorder peakPowerForChannel:0];
+        static uint8_t sPeak[8];
+        // sprintf(sPeak, "%2.2f", pow(10, peak / 20));
+        float value = 2.0 * (pow(5.0, avg / 40.0) - 0.5); // Magic formula to make activity as near as android.
+        if (value < 0.001f) value = 0.001f;
+        sprintf(sPeak, "%2.2f", value);
+        FREDispatchStatusEventAsync(context, (uint8_t*) "ACTIVITY_LEVEL", sPeak);
+    }
+    return nil;
+}
+
+DEFINE_ANE_FUNCTION(startMic)
+{
+    AirMicrophone *mic = (AirMicrophone*)AirMicRefToSelf;
+    [mic startMic];
+    return nil;
+}
+
+DEFINE_ANE_FUNCTION(stopMic)
+{
+    AirMicrophone *mic = (AirMicrophone*)AirMicRefToSelf;
+    [mic stopMic];
     return nil;
 }
 
@@ -136,7 +172,7 @@ void AirMicContextInitializer(void* extData, const uint8_t* ctxType, FREContext 
                              uint32_t* numFunctionsToTest, const FRENamedFunction** functionsToSet) 
 {    
     // Register the links btwn AS3 and ObjC. (dont forget to modify the nbFuntionsToLink integer if you are adding/removing functions)
-    NSInteger nbFuntionsToLink = 2;
+    NSInteger nbFuntionsToLink = 4;
     *numFunctionsToTest = nbFuntionsToLink;
     
     FRENamedFunction* func = (FRENamedFunction*) malloc(sizeof(FRENamedFunction) * nbFuntionsToLink);
@@ -148,6 +184,14 @@ void AirMicContextInitializer(void* extData, const uint8_t* ctxType, FREContext 
     func[1].name = (const uint8_t*) "getActivityLevel";
     func[1].functionData = NULL;
     func[1].function = &getActivityLevel;
+    
+    func[2].name = (const uint8_t*) "startMic";
+    func[2].functionData = NULL;
+    func[2].function = &startMic;
+    
+    func[3].name = (const uint8_t*) "stopMic";
+    func[3].functionData = NULL;
+    func[3].function = &stopMic;
     
     *functionsToSet = func;
     

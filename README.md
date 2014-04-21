@@ -15,6 +15,31 @@ Installation
 The ANE binary (AirMicrophone.ane) is located in the *bin* folder. You should add it to your application project's Build Path and make sure to package it with your app (more information [here](http://help.adobe.com/en_US/air/build/WS597e5dadb9cc1e0253f7d2fc1311b491071-8000.html)).
 
 
+Usage
+-----
+
+API's goal is to write the same code than if using flash's Microphone class, except that you include a different class.
+
+    import cc.fovea.ane.AirMicrophone.Microphone;
+
+    // Initialize the microphone
+    var mic:Microphone = (Microphone)(Microphone.getMicrophone());
+
+    // All this is ignored when using the ANE. Just here for compatibility.
+    mic.setLoopBack();
+    mic.addEventListener(StatusEvent.STATUS, onMicStatus); 
+    [...]
+
+    // Start recording
+    mic.rate = 11; // (or any non-zero value)
+
+    // Retrieve activity level
+    trace(mic.activityLevel);
+
+    // Stop recording
+    mic.rate = 0;
+
+
 Build script
 ---------
 

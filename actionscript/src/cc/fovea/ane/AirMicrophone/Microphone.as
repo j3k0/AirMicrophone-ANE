@@ -128,7 +128,16 @@ package cc.fovea.ane.AirMicrophone
         public function setSilenceLevel(value:Number):void { }
         public function set soundTransform(value:*):void { }
         public function set codec(value:*):void { }
-        public function set rate(value:*):void { }
+        public function set rate(value:int):void {
+            if (isSupported) {
+                if (value > 0) {
+                    extCtx.call("startMic");
+                }
+                else {
+                    extCtx.call("stopMic");
+                }
+            }
+        }
         public function set framesPerPacket(value:*):void { }
         public function set enableVAD(value:Boolean):void { }
     }
