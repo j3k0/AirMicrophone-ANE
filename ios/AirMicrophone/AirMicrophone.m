@@ -76,6 +76,8 @@ void *AirMicRefToSelf;
         NSLog(@"%@", [error description]);
     }
 
+    [self startMic];
+
     NSLog(@"Exiting createRecorder");
 }
 

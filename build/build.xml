@@ -7,6 +7,9 @@
     <!-- All -->
     <target name="all" depends="ios,swc,package" description="Full build of extension"/>
 
+    <!-- iOS Simulator -->
+    <target name="simulator" depends="ios-simulator,swc,package-simulator" description="Full build of extension for iOS simulator"/>
+
     <!-- iOS -->
     <target name="ios" description="Build iOS Library">
         <mkdir dir="../temp/ios/build/"/>
@@ -25,6 +28,29 @@
         </exec>
 
         <copy file="../temp/ios/build/Release-iphoneos/lib${name}.a" todir="../temp/ios" overwrite="true"/>
+
+        <delete dir="../temp/ios/build/"/>
+    </target>
+
+    <!-- iOS Simulator -->
+    <target name="ios-simulator" description="Build iOS Library">
+        <mkdir dir="../temp/ios/build/"/>
+
+        <exec executable="xcodebuild" failonerror="true" dir="../ios/">
+            <arg line="-project ${name}.xcodeproj"/>
+            <arg line="-alltargets clean"/>
+        </exec>
+
+        <exec executable="xcodebuild" failonerror="true" dir="../ios/">
+            <arg line="-project ${name}.xcodeproj"/>
+            <arg line="-sdk iphonesimulator"/>
+            <arg line="-arch i386"/>
+            <arg line="-alltargets"/>
+            <arg line="-configuration Release"/>
+            <arg line="SYMROOT=../temp/ios/build/"/>
+        </exec>
+
+        <copy file="../temp/ios/build/Release-iphonesimulator/lib${name}.a" todir="../temp/ios" overwrite="true"/>
 
         <delete dir="../temp/ios/build/"/>
     </target>
@@ -91,6 +117,25 @@
             <arg value="../build/extension.xml"/>
             <arg line="-swc swc/${name}.swc"/>
             <arg line="-platform iPhone-ARM -platformoptions ../build/platform.xml -C ios/ ."/>
+            <!-- arg line="-platform Android-ARM -C android/ ."/ -->
+            <arg line="-platform default -C default/ ."/>
+        </exec>
+
+        <move file="../temp/${name}.ane" todir="../bin"/>
+        <delete dir="../temp"/>
+    </target>
+
+    <!-- Package Simulator -->
+    <target name="package-simulator" description="Create the extension package">
+        <exec executable="${flex.sdk}/bin/adt${bin.ext}" failonerror="true" dir="../temp">
+            <env key="AIR_SDK_HOME" value="${flex.sdk}"/>
+            <arg value="-package"/>
+            <arg value="-target"/>
+            <arg value="ane"/>
+            <arg value="${name}.ane"/>
+            <arg value="../build/extension-simulator.xml"/>
+            <arg line="-swc swc/${name}.swc"/>
+            <arg line="-platform iPhone-x86 -platformoptions ../build/platform.xml -C ios/ ."/>
             <!-- arg line="-platform Android-ARM -C android/ ."/ -->
             <arg line="-platform default -C default/ ."/>
         </exec>
