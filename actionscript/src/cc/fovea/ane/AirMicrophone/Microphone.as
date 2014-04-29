@@ -36,9 +36,11 @@ package cc.fovea.ane.AirMicrophone
             {
                 if (isSupported)
                 {
+                    trace("[Microphone] create extCtx");
                     extCtx = ExtensionContext.createExtensionContext("cc.fovea.AirMicrophone", null);
                     if (extCtx != null) {
                         extCtx.addEventListener(StatusEvent.STATUS, onStatus);
+                        init(true);
                     } else {
                         trace('[Microphone] extCtx is null.');
                     }
@@ -51,13 +53,15 @@ package cc.fovea.ane.AirMicrophone
         }
 
         public static function getMicrophone():Object {
-            if (isSupported)
+            if (isSupported) {
+                trace("[Microphone] getMicrophone native");
                 return _instance != null ? _instance : new cc.fovea.ane.AirMicrophone.Microphone();
+            }
             else
                 return flash.media.Microphone.getMicrophone();
         }
 
-        public function init(debug:Boolean = false):void
+        public function init(debug:Boolean):void
         {
             if (isSupported) {
                 trace("[Microphone] init library");
@@ -79,7 +83,7 @@ package cc.fovea.ane.AirMicrophone
 
         public static function get isSupported():Boolean
         {
-            var value:Boolean = Capabilities.manufacturer.indexOf('iOS') > -1;
+            var value:Boolean = Capabilities.manufacturer.indexOf('iOS') > -1 || Capabilities.manufacturer.indexOf('Android') > -1;
             // trace(value ? '[Microphone] supported' : '[Microphone] not supported');
             return value;
         }

@@ -31,13 +31,13 @@
                 </applicationDeployment>
         </platform>
 
-        <!-- platform name="Android-ARM"> 
+        <platform name="Android-ARM"> 
             <applicationDeployment> 
                 <nativeLibrary>libAirMicrophone.jar</nativeLibrary> 
-                <initializer>com.freshplanet.inapppurchase.Extension</initializer> 
-                <finalizer>com.freshplanet.inapppurchase.Extension</finalizer> 
+                <initializer>cc.fovea.microphone.AirMicrophoneExtension</initializer> 
+                <finalizer>cc.fovea.microphone.AirMicrophoneExtension</finalizer> 
             </applicationDeployment> 
-        </platform -->
+        </platform>
 
         <platform name="default"> 
             <applicationDeployment/> 

@@ -5,7 +5,7 @@
     <property file="build.config"/>
 
     <!-- All -->
-    <target name="all" depends="ios,swc,package" description="Full build of extension"/>
+    <target name="all" depends="ios,android,swc,package" description="Full build of extension"/>
 
     <!-- iOS Simulator -->
     <target name="simulator" depends="ios-simulator,swc,package-simulator" description="Full build of extension for iOS simulator"/>
@@ -60,11 +60,15 @@
         <delete dir="../android/temp"/>
         <mkdir dir="../android/temp/classes"/>
 
-        <exec executable="${android.aidl}" failonerror="true" dir="../android/">
+        <exec executable="mkdir" failonerror="true" dir="../android/">
+        	<arg line="-p"/>
+        	<arg line="./gen"/>
+        </exec>
+        <!-- exec executable="${android.aidl}" failonerror="true" dir="../android/">
         	<arg line="-p${android.sdk}/framework.aidl"/>
         	<arg line="-o./gen"/>
         	<arg line="./src/com/android/vending/billing/IInAppBillingService.aidl"/>
-        </exec>
+        </exec -->
 
         <javac source="1.6" srcdir="../android/src;../android/gen" destdir="../android/temp/classes" includeantruntime="false">
             <classpath>
@@ -101,7 +105,7 @@
 
         <unzip src="../temp/swc/${name}.swc" dest="../temp/swc/content" overwrite="true"/>
         <copy file="../temp/swc/content/library.swf" todir="../temp/ios" overwrite="true"/>
-        <!-- copy file="../temp/swc/content/library.swf" todir="../temp/android" overwrite="true"/ -->
+        <copy file="../temp/swc/content/library.swf" todir="../temp/android" overwrite="true"/>
         <copy file="../temp/swc/content/library.swf" todir="../temp/default" overwrite="true"/>
         <delete dir="../temp/swc/content/"/>
     </target>
@@ -117,7 +121,7 @@
             <arg value="../build/extension.xml"/>
             <arg line="-swc swc/${name}.swc"/>
             <arg line="-platform iPhone-ARM -platformoptions ../build/platform.xml -C ios/ ."/>
-            <!-- arg line="-platform Android-ARM -C android/ ."/ -->
+            <arg line="-platform Android-ARM -C android/ ."/>
             <arg line="-platform default -C default/ ."/>
         </exec>
 
